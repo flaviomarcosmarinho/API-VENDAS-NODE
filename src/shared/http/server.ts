@@ -26,6 +26,9 @@ app.use(
       });
     }
 
+    /*Utilizado para detectar erros na aplicação*/
+    //console.log(error);
+
     return response.status(500).json({
       status: 'error',
       message: 'Internal server error',

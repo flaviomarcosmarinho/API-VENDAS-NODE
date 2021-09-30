@@ -11,7 +11,7 @@ interface ITemplateVariable {
 }
 
 interface IParceMailTemplate {
-  template: string;
+  file: string;
   variables: ITemplateVariable;
 }
 
