@@ -5,6 +5,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Exclude, Expose } from 'class-transformer';
 
 @Entity('users')
 class User {
@@ -18,6 +19,7 @@ class User {
   email: string;
 
   @Column()
+  @Exclude() //Anotação da biblioteca class-transformer para ocultar a senha do usuário.
   password: string;
 
   @Column()
@@ -28,6 +30,15 @@ class User {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @Expose({ name: 'avatar_url' }) //Criando um campo virtual para expor para o usuário a url completa do avatar.
+  getAvatarUrl(): string | null {
+    if (!this.avatar) {
+      return null;
+    }
+
+    return `${process.env.APP_API_URL}/files/${this.avatar}`;
+  }
 }
 
 export default User;

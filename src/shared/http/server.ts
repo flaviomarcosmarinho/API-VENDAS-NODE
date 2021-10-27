@@ -1,8 +1,10 @@
-import 'reflect-metadata';
+import 'reflect-metadata'; //Esta importação tem que ser a primeira da aplicação (Particularidade).
+import 'dotenv/config';
 import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors'; //Trata excecoes geradas a partir de uma promessa
 import cors from 'cors';
 import { errors } from 'celebrate';
+import { pagination } from 'typeorm-pagination';
 import routes from './routes';
 import AppError from '@shared/errors/AppError';
 import '@shared/typeorm';
@@ -12,6 +14,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(pagination); //Middleware de paginação
 app.use('/files', express.static(uploadConfig.directory)); //Criando a rota estática para os arquivos enviados via upload.
 app.use(routes);
 app.use(errors()); //Tratamento de erros do celebrate.
