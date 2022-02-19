@@ -9,11 +9,14 @@ import routes from './routes';
 import AppError from '@shared/errors/AppError';
 import '@shared/typeorm';
 import uploadConfig from '@config/upload';
+import rateLimiter from './middlewares/rateLimiter';
 
 const app = express();
 
+//Middleware Globais
 app.use(cors());
 app.use(express.json());
+app.use(rateLimiter); //Middleware de segurança (Limite de quantidade de requisição)
 app.use(pagination); //Middleware de paginação
 app.use('/files', express.static(uploadConfig.directory)); //Criando a rota estática para os arquivos enviados via upload.
 app.use(routes);
